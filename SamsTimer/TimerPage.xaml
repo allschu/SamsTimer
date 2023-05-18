@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SamsTimer.TimerPage"
+             Title="Timer"
+             xmlns:local="clr-namespace:SamsTimer.ViewModels"
+             xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+             BackgroundImageSource="bg2.jpg">
+    <ContentPage.BindingContext>
+        <local:TimerViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Margin="20">
+        <Image Source="samslogo.svg"></Image>
+        <progressBar:SfCircularProgressBar HeightRequest="450" WidthRequest="450" Progress="{Binding WorkProgress}"
+                                   TrackRadiusFactor="0.75"
+                                   ProgressRadiusFactor="0.75"
+                                   ThicknessUnit="Factor"
+                                   TrackThickness="0.05"
+                                   ProgressThickness="0.1"
+                                   TrackFill="#ffff"
+                                   ProgressFill="#009fe3"
+                                   Maximum="100">
+            <progressBar:SfCircularProgressBar.Content>
+                <StackLayout HorizontalOptions="Center" Margin="10" VerticalOptions="Center">
+                    <Label FontSize="20" TextColor="White" Text="{Binding Rep}"></Label>
+                    <Label FontSize="60" TextColor="White" Text="{Binding CounterDownTimer}"></Label>
+                    <Label FontSize="20" TextColor="White" Text="{Binding ExerciseNr}"></Label>
+                </StackLayout>
+            </progressBar:SfCircularProgressBar.Content>
+        </progressBar:SfCircularProgressBar>
+        <Button x:Name="clickToShowPopup" Command="{Binding ToSettingsCommand}" Text="Instellen"
+                VerticalOptions="Start" HorizontalOptions="Center" />
+        <Button x:Name="clickToStart" Command="{Binding StartCountDownCommand}" Text="Start"
+                VerticalOptions="Start" HorizontalOptions="Center" />
+    </StackLayout>
+</ContentPage>

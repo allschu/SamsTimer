@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:dataGrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+            xmlns:local="clr-namespace:SamsTimer.ViewModels"
+             x:Class="SamsTimer.TimerSettingsPage"
+             Title="TimerSettingsPage">
+    <ContentPage.BindingContext>
+        <local:TimerSettingsViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Margin="20">
+        <inputLayout:SfTextInputLayout Hint="Minuten"
+                                       HelperText="Voer het aantal minuten in"
+                                       ContainerType="Outlined">
+            <Entry Keyboard="Numeric" Text="{Binding Minutes}" />
+        </inputLayout:SfTextInputLayout>
+        <inputLayout:SfTextInputLayout Hint="Seconden"
+                               HelperText="Voer het aantal seconden in"
+                               ContainerType="Outlined">
+            <Entry Keyboard="Numeric" Text="{Binding Seconds}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout Hint="Herhalingen"
+                               HelperText="Voer het aantal herhalingen in"
+                               ContainerType="Outlined">
+            <Entry Keyboard="Numeric" Text="{Binding Reps}" />
+        </inputLayout:SfTextInputLayout>
+        <inputLayout:SfTextInputLayout Hint="Pauze"
+                               HelperText="Voer het aantal seconden pauze in"
+                               ContainerType="Outlined">
+            <Entry Keyboard="Numeric" Text="{Binding Break}" />
+        </inputLayout:SfTextInputLayout>
+        <Button x:Name="clickToShowPopup" Command="{Binding SaveCommand}" Text="Opslaan"
+                HorizontalOptions="Start" />
+        <dataGrid:SfDataGrid  x:Name="dataGrid"
+                              VerticalScrollBarVisibility="Always"
+                              ItemsSource="{Binding ExerciseList}">
+            <dataGrid:SfDataGrid.Columns>
+                <dataGrid:DataGridTextColumn HeaderText="Volgorde"
+                                             MappingName="Order" />
+                <dataGrid:DataGridTextColumn HeaderText="Minuten"
+                                             MappingName="Minutes" />
+                <dataGrid:DataGridTextColumn HeaderText="Seconden"
+                                             MappingName="Seconds" />
+                <dataGrid:DataGridTextColumn HeaderText="Herhalingen"
+                                             MappingName="Reps" />
+            </dataGrid:SfDataGrid.Columns>
+        </dataGrid:SfDataGrid>
+    </StackLayout>
+</ContentPage>
