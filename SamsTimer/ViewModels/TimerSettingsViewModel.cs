@@ -67,6 +67,8 @@ namespace SamsTimer.ViewModels
 
             SaveCommand = new Command(async () => await Save());
 
+            //TODO were is the rest of the implementation
+            //Needs to be implemented
             MinutesSliderDragCompleted = new Command(OnMinutesSliderDragCompleted);
             SecondsSliderDragCompleted = new Command(OnSecondsDragCompleted);
         }
@@ -82,7 +84,7 @@ namespace SamsTimer.ViewModels
                                                             { "exercise", exercise }
                                                         };
 
-            //await Shell.Current.GoToAsync("timer", navigationParameter);
+            await Shell.Current.GoToAsync("timer", navigationParameter);
         }
 
         private void OnMinutesSliderDragCompleted(object obj)

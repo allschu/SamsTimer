@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SamsTimer.ViewModels"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             x:Class="SamsTimer.Views.SignUpPage"
+             Title="Registreren">
+    <ContentPage.BindingContext>
+        <local:SignUpViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="15">
+
+            <dataForm:SfDataForm  x:Name="dataForm" VerticalOptions="FillAndExpand"
+            DataObject="{Binding NewMember}">
+            </dataForm:SfDataForm>
+            <Button x:Name="RegisterBtn"
+                    Text="Volgende"
+
+                    TextColor="White"
+                    Background="{StaticResource Primary}"
+                    Command="{Binding NextSignUpPageCommand}">
+            </Button>
+
+    </StackLayout>
+</ContentPage>
