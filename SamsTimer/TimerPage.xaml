@@ -17,7 +17,7 @@
                                    ThicknessUnit="Factor"
                                    TrackThickness="0.05"
                                    ProgressThickness="0.1"
-                                   TrackFill="#ffff"
+                                   TrackFill="White"
                                    ProgressFill="#009fe3"
                                    Maximum="100">
             <progressBar:SfCircularProgressBar.Content>

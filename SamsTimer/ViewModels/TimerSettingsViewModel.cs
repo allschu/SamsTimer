@@ -15,6 +15,8 @@ namespace SamsTimer.ViewModels
         }
 
         public ICommand SaveCommand { get; }
+        public ICommand MinutesSliderDragCompleted { get; }
+        public ICommand SecondsSliderDragCompleted { get; }
 
         private int _hours;
 
@@ -58,8 +60,15 @@ namespace SamsTimer.ViewModels
 
         public TimerSettingsViewModel()
         {
-            ExerciseList = new ObservableCollection<Exercise>();
+            if (ExerciseList == null)
+            {
+                ExerciseList = new ObservableCollection<Exercise>();
+            }
+
             SaveCommand = new Command(async () => await Save());
+
+            MinutesSliderDragCompleted = new Command(OnMinutesSliderDragCompleted);
+            SecondsSliderDragCompleted = new Command(OnSecondsDragCompleted);
         }
 
         private async Task Save()
@@ -74,6 +83,14 @@ namespace SamsTimer.ViewModels
                                                         };
 
             //await Shell.Current.GoToAsync("timer", navigationParameter);
+        }
+
+        private void OnMinutesSliderDragCompleted(object obj)
+        {
+        }
+
+        private void OnSecondsDragCompleted(object obj)
+        {
         }
     }
 }

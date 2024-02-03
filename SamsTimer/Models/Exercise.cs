@@ -9,6 +9,7 @@
         public int Minutes { get; }
         public int Seconds { get; }
         public int Break { get; }
+        public bool Selected { get; set; }
 
         public Exercise(int order, int reps, int hours, int minutes, int seconds, int @break)
         {

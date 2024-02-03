@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamsTimer", "SamsTimer\SamsTimer.csproj", "{75A01D1D-F6EB-4D1B-A994-3A9AF5C364D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamsTimer.Shared", "SamsTimer.Shared\SamsTimer.Shared.csproj", "{88A9D099-EED8-4415-A700-393368E46A63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamsTimer.Infrastructure", "SamsTimer.Infrastructure\SamsTimer.Infrastructure.csproj", "{9F831CDF-A08B-42F2-8BF1-4C674F69D025}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{75A01D1D-F6EB-4D1B-A994-3A9AF5C364D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75A01D1D-F6EB-4D1B-A994-3A9AF5C364D7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{75A01D1D-F6EB-4D1B-A994-3A9AF5C364D7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{88A9D099-EED8-4415-A700-393368E46A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A9D099-EED8-4415-A700-393368E46A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A9D099-EED8-4415-A700-393368E46A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A9D099-EED8-4415-A700-393368E46A63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F831CDF-A08B-42F2-8BF1-4C674F69D025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F831CDF-A08B-42F2-8BF1-4C674F69D025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F831CDF-A08B-42F2-8BF1-4C674F69D025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F831CDF-A08B-42F2-8BF1-4C674F69D025}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
