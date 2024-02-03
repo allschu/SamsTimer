@@ -8,7 +8,18 @@ namespace SamsTimer.ViewModels
     {
         private readonly IAuthService _authService;
 
-        public Member NewMember { get; set; }
+        private Member _newMember;
+
+        public Member NewMember
+        {
+            get => _newMember;
+            set
+            {
+                _newMember = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Subscription NewSubscription { get; set; }
 
         public ICommand NextSignUpPageCommand { get; }
@@ -17,7 +28,7 @@ namespace SamsTimer.ViewModels
         public SignUpViewModel(IAuthService authService)
         {
             NewMember = new();
-            NewSubscription = new Subscription();
+            NewSubscription = new();
 
             _authService = authService;
 
@@ -33,10 +44,17 @@ namespace SamsTimer.ViewModels
 
         private async Task SignUpUser()
         {
-            await _authService.SignUp(NewMember.Email, NewMember.Password);
+            try
+            {
+                await _authService.SignUp(NewMember.Email, NewMember.Password);
 
-            //return user to homescreen
-            await Shell.Current.GoToAsync("");
+                //return user to homescreen
+                await Shell.Current.GoToAsync("");
+            }
+            catch (Exception ex)
+            {
+                Application.Current.MainPage.DisplayAlert("Foutmelding", "Er is iets fout gegaan tijdens het registreren. Probeer het later nog eens", "Ok");
+            }
         }
     }
 }

@@ -7,14 +7,14 @@
              Title="Registreren">
     <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="15">
         <dataForm:SfDataForm  x:Name="dataForm" VerticalOptions="FillAndExpand"
-            DataObject="{Binding NewMember}">
+            DataObject="{Binding NewMember}" CommitMode="PropertyChanged">
         </dataForm:SfDataForm>
         <Button x:Name="RegisterBtn"
                     Text="Volgende"
 
                     TextColor="White"
                     Background="{StaticResource Primary}"
-                    Command="{Binding NextSignUpPageCommand}">
+                    Command="{Binding SignUpCommand}">
         </Button>
     </StackLayout>
 </ContentPage>
