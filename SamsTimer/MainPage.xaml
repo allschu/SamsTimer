@@ -4,9 +4,6 @@
              xmlns:local="clr-namespace:SamsTimer.ViewModels"
              x:Class="SamsTimer.MainPage"
              BackgroundImageSource="bg1.jpg">
-    <ContentPage.BindingContext>
-        <local:MainPageViewModel />
-    </ContentPage.BindingContext>
     <ScrollView>
         <StackLayout Margin="20">
             <Image Source="samslogo.svg"></Image>

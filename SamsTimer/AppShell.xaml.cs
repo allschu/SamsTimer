@@ -17,7 +17,7 @@ public partial class AppShell : Shell
         Routes.Add("timersettings", typeof(TimerSettingsPage));
         Routes.Add("timer", typeof(TimerPage));
         Routes.Add("register", typeof(SignUpPage));
-        Routes.Add("register2", typeof(SignUpPage2));
+        Routes.Add("register2", typeof(SignUpPage2)); //Can be used for extra questions
 
         foreach (var item in Routes)
         {

@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:SamsTimer.ViewModels"
              xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
              BackgroundImageSource="bg2.jpg">
-    <ContentPage.BindingContext>
-        <local:TimerViewModel />
-    </ContentPage.BindingContext>
     <StackLayout Margin="20">
         <Image Source="samslogo.svg"></Image>
         <progressBar:SfCircularProgressBar HeightRequest="450" WidthRequest="450" Progress="{Binding WorkProgress}"

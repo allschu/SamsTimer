@@ -5,9 +5,6 @@
              xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
              x:Class="SamsTimer.TimerSettingsPage"
              Title="TimerSettingsPage">
-    <ContentPage.BindingContext>
-        <local:TimerSettingsViewModel />
-    </ContentPage.BindingContext>
     <StackLayout Margin="15">
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label FontSize="60" TextColor="Black" Text="{Binding Minutes }"></Label>
