@@ -23,7 +23,7 @@
         <ShellContent
         Title="Register"
         Icon="timeicon.png"
-        ContentTemplate="{DataTemplate views:SignUpPage}"
+        ContentTemplate="{DataTemplate views:SignInPage}"
         Route="register" />
     </TabBar>
 </Shell>

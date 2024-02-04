@@ -5,6 +5,14 @@ namespace SamsTimer.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        private bool isBusy = false;
+
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set { SetProperty(ref isBusy, value); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)

@@ -5,7 +5,7 @@ namespace SamsTimer.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         public ICommand SignInCommand { get; }
 
         private string _username;
@@ -32,7 +32,7 @@ namespace SamsTimer.ViewModels
             }
         }
 
-        public SignInViewModel(AuthService authService)
+        public SignInViewModel(IAuthService authService)
         {
             _authService = authService;
 
@@ -41,7 +41,28 @@ namespace SamsTimer.ViewModels
 
         private async Task SignInUser()
         {
-            await _authService.SignIn(Username, Password);
+            try
+            {
+                IsBusy = true;
+
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+                {
+                    IsBusy = false;
+                    return;
+                }
+
+                await _authService.SignIn(Username, Password);
+
+                IsBusy = false;
+            }
+            catch (Exception ex)
+            {
+                //Todo: Add some exception logging, handling
+
+                IsBusy = false;
+
+                Application.Current.MainPage.DisplayAlert("Fout", "Er is iets fout gegaan. Probeer het later nog eens.", "Ok");
+            }
         }
     }
 }

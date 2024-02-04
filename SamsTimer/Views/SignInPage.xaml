@@ -1,12 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SamsTimer.Views.SignInPage"
-             Title="SignInPage">
-    <VerticalStackLayout>
+             Title="Inloggen">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+                    Padding="20,50,20,0"
+                    HorizontalOptions="FillAndExpand"
+                    RowSpacing="20"
+                    VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+                        Grid.Row="0"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Welkom"
+                        TextColor="#1C375C" />
+        <Label
+                        Grid.Row="1"
+                        Margin="0,-15,0,0"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Inloggen"
+                        TextColor="#1C375C" />
+        <Entry
+                        Grid.Row="2"
+                        Margin="0,20,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Gebruikersnaam"
+                        Text="{Binding Username}"
+                        VerticalOptions="FillAndExpand" />
+        <Entry
+                        Grid.Row="3"
+                        HorizontalOptions="FillAndExpand"
+                        IsPassword="True"
+                        Placeholder="Wachtwoord"
+                        Text="{Binding Password}"
+                        VerticalOptions="FillAndExpand" />
+
+        <ActivityIndicator Grid.Row="4" IsRunning="{Binding IsBusy}">
+        </ActivityIndicator>
+
+        <Button
+                        Grid.Row="4"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding SignInCommand}"
+                        CornerRadius="20"
+                        Text="Login" />
+
+        <Button
+                        Grid.Row="5"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding RegisterBtn}"
+                        CornerRadius="20"
+                        Text="Registreren" />
+
+        <Label
+                        Grid.Row="7"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Wachtwoord vergeten?" />
+    </Grid>
 </ContentPage>
