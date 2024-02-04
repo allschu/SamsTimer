@@ -1,12 +1,17 @@
-﻿using SamsTimer.Services;
+﻿using CommunityToolkit.Maui.Alerts;
+using Microsoft.Extensions.Logging;
+using SamsTimer.Services;
 using System.Windows.Input;
 
 namespace SamsTimer.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
+        private readonly ILogger<SignInViewModel> _logger;
         private readonly IAuthService _authService;
+
         public ICommand SignInCommand { get; }
+        public ICommand SignUpCommand { get; }
 
         private string _username;
 
@@ -32,36 +37,51 @@ namespace SamsTimer.ViewModels
             }
         }
 
-        public SignInViewModel(IAuthService authService)
+        public SignInViewModel(IAuthService authService, ILogger<SignInViewModel> logger)
         {
+            _logger = logger;
             _authService = authService;
 
             SignInCommand = new Command(async () => await SignInUser());
+            SignUpCommand = new Command(async () => await SignUpUser());
+        }
+
+        private async Task SignUpUser()
+        {
+            await Shell.Current.GoToAsync("register");
         }
 
         private async Task SignInUser()
         {
+            _logger.LogInformation("try to sign in user");
+
             try
             {
                 IsBusy = true;
 
                 if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
                 {
+                    _logger.LogWarning("No username or password are entered");
+
                     IsBusy = false;
+                    //If there are no username and or password, then don't bother the server
+                    await Toast.Make("Voer een gebruikersnaam en wachtwoord in", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
                     return;
                 }
 
+                _logger.LogInformation("Try to sign in user with authservice");
+                //Sign in
                 await _authService.SignIn(Username, Password);
 
                 IsBusy = false;
             }
             catch (Exception ex)
             {
-                //Todo: Add some exception logging, handling
+                _logger.LogError(ex.Message);
 
                 IsBusy = false;
 
-                Application.Current.MainPage.DisplayAlert("Fout", "Er is iets fout gegaan. Probeer het later nog eens.", "Ok");
+                await Toast.Make("Verkeerde gebruikersnaam of wachtwoord", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
             }
         }
     }

@@ -55,6 +55,7 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 	  <PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
+	  <PackageReference Include="MetroLog.Maui" Version="2.1.0" />
 	  <PackageReference Include="Syncfusion.Maui.Core" Version="24.2.3" />
 	  <PackageReference Include="Syncfusion.Maui.DataForm" Version="24.2.3" />
 	  <PackageReference Include="Syncfusion.Maui.ProgressBar" Version="24.2.3" />
@@ -69,6 +70,9 @@
 	  <Compile Update="TimerPage.xaml.cs">
 	    <DependentUpon>TimerPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\ForgotPasswordPage.xaml.cs">
+	    <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -78,6 +82,9 @@
 	  <MauiXaml Update="TimerSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ForgotPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SignInPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -85,6 +92,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SignUpPage2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SupportPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

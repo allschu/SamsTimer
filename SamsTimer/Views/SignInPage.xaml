@@ -67,7 +67,7 @@
         <Button
                         Grid.Row="5"
                         BackgroundColor="{StaticResource Primary}"
-                        Command="{Binding RegisterBtn}"
+                        Command="{Binding SignUpCommand}"
                         CornerRadius="20"
                         Text="Registreren" />
 

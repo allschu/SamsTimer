@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
-using Firebase.Auth.Repository;
+using MetroLog.MicrosoftExtensions;
+using MetroLog.Operators;
+using Microsoft.Extensions.Logging;
 using SamsTimer.Services;
 using SamsTimer.ViewModels;
 using SamsTimer.Views;
@@ -18,6 +20,8 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureSyncfusionCore()
+            .AddLogging()
+            .AddFirebaseAuth()
             .RegisterServices()
             .RegisterViewModels()
             .RegisterViews()
@@ -28,23 +32,13 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddSingleton(services => new FirebaseAuthClient(new FirebaseAuthConfig()
-        {
-            ApiKey = "",
-            AuthDomain = "lidmaatschapbeheer.firebaseapp.com",
-            Providers =
-                [
-                    new EmailProvider()
-                ],
-            UserRepository = services.GetRequiredService<IUserRepository>()
-        }));
-
         return builder.Build();
     }
 
     public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
     {
         mauiAppBuilder.Services.AddTransient<IAuthService, AuthService>();
+        mauiAppBuilder.Services.AddTransient<ILogService, LogService>();
 
         return mauiAppBuilder;
     }
@@ -57,6 +51,8 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddSingleton<SignInViewModel>();
         mauiAppBuilder.Services.AddSingleton<SignUpViewModel>();
 
+        mauiAppBuilder.Services.AddSingleton<SupportViewModel>();
+
         return mauiAppBuilder;
     }
 
@@ -67,6 +63,53 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddSingleton<SignUpPage>();
         mauiAppBuilder.Services.AddSingleton<SignInPage>();
         mauiAppBuilder.Services.AddSingleton<TimerSettingsPage>();
+
+        mauiAppBuilder.Services.AddSingleton<SupportPage>();
+
+        return mauiAppBuilder;
+    }
+
+    public static MauiAppBuilder AddLogging(this MauiAppBuilder mauiAppBuilder)
+    {
+        mauiAppBuilder.Logging
+          .AddTraceLogger(
+              options =>
+              {
+                  options.MinLevel = LogLevel.Trace;
+                  options.MaxLevel = LogLevel.Critical;
+              }) // Will write to the Debug Output
+          .AddConsoleLogger(
+              options =>
+              {
+                  options.MinLevel = LogLevel.Information;
+                  options.MaxLevel = LogLevel.Critical;
+              }) // Will write to the Console Output (logcat for android)
+          .AddStreamingFileLogger(
+              options =>
+              {
+                  options.RetainDays = 2;
+                  options.FolderPath = Path.Combine(
+                      FileSystem.CacheDirectory,
+                      "Logs");
+              }); // Will write to files
+
+        mauiAppBuilder.Services.AddSingleton(LogOperatorRetriever.Instance);
+
+        return mauiAppBuilder;
+    }
+
+    public static MauiAppBuilder AddFirebaseAuth(this MauiAppBuilder mauiAppBuilder)
+    {
+        mauiAppBuilder.Services.AddSingleton(services => new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = "",
+            AuthDomain = "lidmaatschapbeheer.firebaseapp.com",
+            Providers =
+                [
+                    new EmailProvider()
+                ]
+                //UserRepository = services.GetRequiredService<IUserRepository>()
+        }));
 
         return mauiAppBuilder;
     }

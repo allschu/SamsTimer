@@ -8,24 +8,21 @@ namespace SamsTimer.Shared.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private string _firstName;
-        private string _lastName;
-        private string _address;
-        private string _zipcode;
-        private string _city;
-        private string _phone;
+        private string? _firstName;
+        private string? _lastName;
+        private string? _address;
+        private string? _zipcode;
+        private string? _city;
+        private string? _phone;
         private DateTime _dateOfBirth;
-        private string _email;
-        private string _password;
+        private string? _email;
+        private string? _password;
 
         [Display(Name = "Voornaam")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Voornaam is verplicht")]
         public string FirstName
         {
-            get
-            {
-                return _firstName;
-            }
+            get => _firstName!;
 
             set
             {
@@ -42,10 +39,7 @@ namespace SamsTimer.Shared.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Achternaam is verplicht")]
         public string LastName
         {
-            get
-            {
-                return _lastName;
-            }
+            get => _lastName!;
 
             set
             {
@@ -62,10 +56,7 @@ namespace SamsTimer.Shared.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Adres is verplicht")]
         public string Address
         {
-            get
-            {
-                return _address;
-            }
+            get => _address!;
 
             set
             {
@@ -83,10 +74,7 @@ namespace SamsTimer.Shared.Models
         [DataType(DataType.PostalCode)]
         public string ZipCode
         {
-            get
-            {
-                return _zipcode;
-            }
+            get => _zipcode!;
 
             set
             {
@@ -103,10 +91,7 @@ namespace SamsTimer.Shared.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Woonplaats is verplicht")]
         public string City
         {
-            get
-            {
-                return _city;
-            }
+            get => _city!;
 
             set
             {
@@ -123,10 +108,7 @@ namespace SamsTimer.Shared.Models
         [Required(ErrorMessage = "Telefoonnummer is verplicht")]
         public string Phone
         {
-            get
-            {
-                return _phone;
-            }
+            get => _phone!;
 
             set
             {
@@ -165,10 +147,7 @@ namespace SamsTimer.Shared.Models
         [DataType(DataType.EmailAddress)]
         public string Email
         {
-            get
-            {
-                return _email;
-            }
+            get => _email!;
 
             set
             {
@@ -188,10 +167,7 @@ namespace SamsTimer.Shared.Models
         [DataType(DataType.Password)]
         public string Password
         {
-            get
-            {
-                return _password;
-            }
+            get => _password!;
 
             set
             {

@@ -22,6 +22,7 @@ namespace SamsTimer.Services
                 return;
             }
 
+            //Set the username and email in the preferences
             Preferences.Set(AppConstants.PreferencesUsername, email);
             Preferences.Set(AppConstants.PreferencesPassword, password);
         }
