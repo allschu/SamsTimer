@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SamsTimer.ViewModels
@@ -10,6 +11,7 @@ namespace SamsTimer.ViewModels
         public ICommand StopCommand { get; }
 
         private bool _stopIsVisible;
+        private readonly ILogger<MainPageViewModel> _logger;
 
         public bool StopIsVisible
         {
@@ -36,7 +38,7 @@ namespace SamsTimer.ViewModels
         private readonly Stopwatch _stopwatch;
         private readonly IDispatcherTimer _timer;
 
-        public MainPageViewModel()
+        public MainPageViewModel(ILogger<MainPageViewModel> logger)
         {
             StopWatchText = "0:00:00:00";
 
@@ -44,6 +46,7 @@ namespace SamsTimer.ViewModels
             _stopIsVisible = false;
 
             _stopwatch = new Stopwatch();
+            _logger = logger;
 
             _timer = Dispatcher.GetForCurrentThread().CreateTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(16);
@@ -52,6 +55,8 @@ namespace SamsTimer.ViewModels
             StartCommand = new Command(() => Start());
             StopCommand = new Command(() => Stop());
             ResetCommand = new Command(() => Reset());
+
+            _logger.LogInformation("MainPageViewModel created");
         }
 
         private void _timer_Tick(object sender, EventArgs e)

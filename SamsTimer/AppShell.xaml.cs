@@ -19,6 +19,7 @@ public partial class AppShell : Shell
         Routes.Add("signIn", typeof(SignInPage));
         Routes.Add("register", typeof(SignUpPage));
         Routes.Add("register2", typeof(SignUpPage2)); //Can be used for extra questions
+        Routes.Add("support", typeof(SupportPage));
 
         foreach (var item in Routes)
         {

@@ -15,6 +15,9 @@
     <FlyoutItem Icon="user.svg" Title="Account">
         <ShellContent  Title="Inloggen"  Icon="user.svg"  ContentTemplate="{DataTemplate views:SignInPage}"  Route="signIn" />
     </FlyoutItem>
+    <FlyoutItem Icon="support.svg" Title="Support">
+        <ShellContent  Title="Support"  Icon="support.svg"  ContentTemplate="{DataTemplate views:SupportPage}"  Route="support" />
+    </FlyoutItem>
     <TabBar>
         <ShellContent Title="Registreren" Icon="timeicon.png" ContentTemplate="{DataTemplate views:SignUpPage}" Route="register" />
     </TabBar>

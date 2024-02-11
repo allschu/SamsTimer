@@ -44,16 +44,20 @@ namespace SamsTimer.ViewModels
 
             SignInCommand = new Command(async () => await SignInUser());
             SignUpCommand = new Command(async () => await SignUpUser());
+
+            _logger.LogInformation("SignInViewModel created");
         }
 
         private async Task SignUpUser()
         {
+            _logger.LogInformation("Navigate to register page");
+
             await Shell.Current.GoToAsync("register");
         }
 
         private async Task SignInUser()
         {
-            _logger.LogInformation("try to sign in user");
+            _logger.LogInformation("Try to sign in user with authservice");
 
             try
             {
@@ -69,7 +73,6 @@ namespace SamsTimer.ViewModels
                     return;
                 }
 
-                _logger.LogInformation("Try to sign in user with authservice");
                 //Sign in
                 await _authService.SignIn(Username, Password);
 
@@ -77,7 +80,7 @@ namespace SamsTimer.ViewModels
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Error during sign in");
 
                 IsBusy = false;
 

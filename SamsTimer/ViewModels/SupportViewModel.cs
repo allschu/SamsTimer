@@ -13,6 +13,11 @@ namespace SamsTimer.ViewModels
             _logService = logService;
 
             ShareCommand = new Command(async () => await ShareLogs());
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await CheckForUserPermission();
+            });
         }
 
         public async Task ShareLogs()
@@ -39,12 +44,32 @@ namespace SamsTimer.ViewModels
 
                 await Share.RequestAsync(new ShareFileRequest
                 {
-                    Title = "Deel logbestanden",
+                    Title = "logbestanden",
                     File = new ShareFile(filePath)
                 });
             }
             catch (Exception exception)
             {
+                Application.Current.MainPage.DisplayAlert("Foutmelding", exception.Message, "OK");
+            }
+        }
+
+        private async Task CheckForUserPermission()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+
+            if (status != PermissionStatus.Granted)
+            {
+                status = await Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                // Permission was granted
+            }
+            else
+            {
+                // Permission was denied
             }
         }
     }
