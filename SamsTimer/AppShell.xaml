@@ -5,25 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SamsTimer"
     xmlns:views="clr-namespace:SamsTimer.Views"
-    Shell.FlyoutBehavior="Disabled"
     BackgroundColor="Black"
     Shell.TabBarUnselectedColor="White"
     Shell.TabBarBackgroundColor="Black">
+    <FlyoutItem Icon="dumbbell.svg" Route="MainPage" Title="Training">
+        <ShellContent Title="Stopwatch" Icon="stopwatchicon.png" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+        <ShellContent Title="Timer"  Icon="timeicon.png" ContentTemplate="{DataTemplate local:TimerPage}" Route="Timer" />
+    </FlyoutItem>
+    <FlyoutItem Icon="user.svg" Title="Account">
+        <ShellContent  Title="Inloggen"  Icon="user.svg"  ContentTemplate="{DataTemplate views:SignInPage}"  Route="signIn" />
+    </FlyoutItem>
     <TabBar>
-        <ShellContent
-        Title="Stopwatch"
-        Icon="stopwatchicon.png"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-        <ShellContent
-        Title="Timer"
-        Icon="timeicon.png"
-        ContentTemplate="{DataTemplate local:TimerPage}"
-        Route="Timer" />
-        <ShellContent
-        Title="Register"
-        Icon="timeicon.png"
-        ContentTemplate="{DataTemplate views:SupportPage}"
-        Route="register" />
+        <ShellContent Title="Registreren" Icon="timeicon.png" ContentTemplate="{DataTemplate views:SignUpPage}" Route="register" />
     </TabBar>
 </Shell>
