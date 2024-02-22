@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RavenDB.Client" Version="6.0.100" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Admin.Shared\Admin.Shared.csproj" />
   </ItemGroup>
 

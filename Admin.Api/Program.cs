@@ -1,10 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using Admin.Api.Extensions;
+using Admin.Shared;
+using Raven.Client.Documents;
+using Raven.DependencyInjection;
+using Raven.Identity;
 
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddRavenDbDocStore() // Create our IDocumentStore singleton using the database settings in appsettings.json
+    .AddRavenDbAsyncSession() // Create an Raven IAsyncDocumentSession for every request.
+    .AddIdentity<User, IdentityRole>() // Tell ASP.NET to use identity framework.
+    .AddRavenDbIdentityStores<User, IdentityRole>(); // Use Raven as the Identity store for user users and roles.
 
 var app = builder.Build();
 
@@ -17,7 +28,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Required for Raven Identity to work with authorization and authentication.
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Create the database if it doesn't exist.
+// Also, create our roles if they don't exist. Needed because we're doing some role-based auth in this demo.
+var docStore = app.Services.GetRequiredService<IDocumentStore>();
+docStore.EnsureExists();
+docStore.EnsureRolesExist(new List<string> { User.AdminRole, User.MemberRole });
 
 app.MapControllers();
 
