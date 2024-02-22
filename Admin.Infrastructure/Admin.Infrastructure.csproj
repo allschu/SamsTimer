@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Riok.Mapperly" Version="3.3.0" />
-    <PackageReference Include="Syncfusion.Maui.DataForm" Version="24.2.3" />
+    <PackageReference Include="RavenDB.Client" Version="6.0.100" />
   </ItemGroup>
 
   <ItemGroup>

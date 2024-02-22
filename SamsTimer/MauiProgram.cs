@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using Firebase.Auth;
-using Firebase.Auth.Providers;
-using Firebase.Auth.Repository;
 using SamsTimer.Services;
 using SamsTimer.ViewModels;
 using SamsTimer.Views;
@@ -27,17 +24,6 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-
-        builder.Services.AddSingleton(services => new FirebaseAuthClient(new FirebaseAuthConfig()
-        {
-            ApiKey = "",
-            AuthDomain = "lidmaatschapbeheer.firebaseapp.com",
-            Providers =
-                [
-                    new EmailProvider()
-                ],
-            UserRepository = services.GetRequiredService<IUserRepository>()
-        }));
 
         return builder.Build();
     }

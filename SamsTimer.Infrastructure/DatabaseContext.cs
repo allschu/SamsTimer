@@ -1,5 +1,5 @@
-﻿using Google.Cloud.Firestore;
-using SamsTimer.Shared;
+﻿using Admin.Shared;
+using Google.Cloud.Firestore;
 
 namespace SamsTimer.Infrastructure
 {
@@ -9,8 +9,7 @@ namespace SamsTimer.Infrastructure
 
         public DatabaseContext()
         {
-            //Only creates a new instance not a new Db
-            Database = FirestoreDb.Create(AppConstants.FirebaseProjectName);
+           
         }
     }
 }
