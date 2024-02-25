@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Admin.Shared;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Raven.Client.Documents;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +11,20 @@ namespace Admin.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly UserManager<User> _userManager;
+        
+        public UsersController()
+        {
+            
+        }
+
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
         {
-            return new string[] { "value1", "value2" };
+            var users = await _userManager.Users.ToListAsync(cancellationToken);
+
+            return Ok(users);
         }
 
         // GET api/<UsersController>/5

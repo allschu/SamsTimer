@@ -1,7 +1,6 @@
 using Admin.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Raven.DependencyInjection;
 using Raven.Identity;
 using WebUI.Components;
@@ -20,32 +19,12 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
-//builder.Services.AddAuthentication(options =>
-//    {
-//        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-//        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-//    })
-//    .AddIdentityCookies();
-
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(connectionString));
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-//builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationDbContext>()
-//    .AddSignInManager()
-//    .AddDefaultTokenProviders();
-
-
 builder.Services
     .AddRavenDbDocStore() // Create our IDocumentStore singleton using the database settings in appsettings.json
     .AddRavenDbAsyncSession() // Create an Raven IAsyncDocumentSession for every request.
     .AddIdentity<User, Raven.Identity.IdentityRole>() // Tell ASP.NET to use identity framework.
     .AddRavenDbIdentityStores<User, Raven.Identity.IdentityRole>()
     .AddDefaultTokenProviders();// Use Raven as the Identity store for user users and roles.
-
-
 
 builder.Services.AddSingleton<IEmailSender<User>, IdentityNoOpEmailSender>();
 

@@ -1,0 +1,34 @@
+﻿@using Admin.Shared
+@inject HttpClient http
+
+<h3>Users</h3>
+
+<RadzenDataGrid @ref="grid" IsLoading=@isLoading Count="@count" Data="@members" LoadData="@LoadData" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="@pageSize" PagerHorizontalAlign="HorizontalAlign.Center" TItem="User">
+    <Columns>
+        <RadzenDataGridColumn TItem="User" Property="FirstName" Title="First Name" />
+        <RadzenDataGridColumn TItem="User" Property="LastName" Title="Last Name" />
+        <RadzenDataGridColumn TItem="User" Property="UserName" Title="UserName" />
+        <RadzenDataGridColumn TItem="User" Property="PhoneNumber" Title="Phone Number" />
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    List<User> members;
+    RadzenDataGrid<User> grid;
+    bool isLoading = false;
+    int count;
+    
+
+    private async Task LoadData(LoadDataArgs args)
+    {
+        isLoading = true;
+        
+        var skip = args.Skip ?? 0;
+        var take = args.Top ?? 10;
+
+        await http.GetFromJsonAsync<List<User>>("api/users")
+
+        isLoading = false;
+    }
+
+}

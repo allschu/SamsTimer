@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Api", "Admin.Api\Admi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Shared", "Admin.Shared\Admin.Shared.csproj", "{5A20E760-16AF-4BEF-A234-AAA60209DD14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI\WebUI.csproj", "{EF39AEF9-6786-4FD3-BDD3-F0874C770F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI\WebUI.csproj", "{EF39AEF9-6786-4FD3-BDD3-F0874C770F42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI.Client", "WebUI\WebUI.Client\WebUI.Client.csproj", "{7EAE2D43-42AF-4AB7-B48E-A25C0BC218E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.Client", "WebUI\WebUI.Client\WebUI.Client.csproj", "{7EAE2D43-42AF-4AB7-B48E-A25C0BC218E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
