@@ -1,0 +1,87 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenLabel Text="Header" />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Responsive="false" Style="width: max-content">
+        <RadzenPanelMenu Click="@(SubmitForm)" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
+            <RadzenPanelMenuItem Text="Overview" Path="/" Icon="home" />
+            <AuthorizeView>
+                <Authorized>
+                    <RadzenPanelMenuItem Text="UI Fundamentals" Icon="auto_awesome">
+                        <RadzenPanelMenuItem Text="Themes" Icon="color_lens" />
+                        <RadzenPanelMenuItem Text="Colors" Icon="invert_colors" />
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Logout" Icon="exit_to_app" />
+                </Authorized>
+                <NotAuthorized>
+                    <RadzenPanelMenuItem Text="Login" Path="Account/Login" Icon="security" />
+                </NotAuthorized>
+            </AuthorizeView>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
+
+<form id="logoutForm" action="Account/Logout" method="post">
+    <AntiforgeryToken />
+    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+</form>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<script>
+    function submitForm() {
+        document.getElementById('logoutForm').submit();
+    }
+</script>
+
+@code {
+    bool sidebarExpanded = true;
+    private string? currentUrl;
+
+
+    private async Task SubmitForm(MenuItemEventArgs e)
+    {
+        if (e.Text == "Logout")
+        {
+            await JSRuntime.InvokeVoidAsync("submitForm");
+        };
+    }
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

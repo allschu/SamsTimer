@@ -1,0 +1,78 @@
+﻿@page "/Account/Login"
+
+@using System.ComponentModel.DataAnnotations
+@using Admin.UI.ViewModels
+@using Admin.UI.ViewModels.Validators
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using Admin.Shared
+
+@inject SignInManager<User> SignInManager
+@inject ILogger<Login> Logger
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>Log in</PageTitle>
+
+<MudForm Model="@model" @ref="@form" Validation="@(loginValidator.ValidateValue)" ValidationDelay="0">
+    <MudCardContent>
+        <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
+        <MudText>
+            Don't have an account? <MudLink Href="/pages/authentication/register">Sign Up</MudLink>
+        </MudText>
+        <MudTextField @bind-Value="model.Email" For="@(() => model.Email)" Label="Email" Immediate="true" />
+        <MudTextField Label="Password" @bind-Value="model.Password" For="@(() => model.Password)" Immediate="true" InputType="InputType.Password" />
+
+        <div Class="d-flex justify-space-between align-center">
+            <MudCheckBox For="@(() => model.RememberMe)" Label="Remember me?" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox>
+            <MudLink Href="/pages/authentication/forgot-password">Forgot password?</MudLink>
+        </div>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Size="Size.Large"
+                   Disabled="@(_loading)"
+                   ButtonType="ButtonType.Button"
+                   OnClick="@(LoginUser)"
+                   FullWidth="true">
+            @if (_loading)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class="ms-2">Loading</MudText>
+            }
+            else
+            {
+                <MudText>Sign in</MudText>
+            }
+
+        </MudButton>
+    </MudCardContent>
+</MudForm>
+
+@code {
+    private string? errorMessage;
+    private bool _success;
+    private bool _loading;
+    MudForm form;
+    private LoginViewModel model = new();
+
+    LoginValidator loginValidator = new LoginValidator();
+
+    public async Task LoginUser()
+    {
+
+        await form.Validate();
+        
+        // This doesn't count login failures towards account lockout
+        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+        var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+            Logger.LogInformation("User logged in.");
+        }
+        else
+        {
+            errorMessage = "Error: Invalid login attempt.";
+        }
+    }
+}
