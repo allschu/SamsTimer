@@ -1,24 +1,22 @@
 using Admin.Shared;
+using BlazorUI.Components;
+using BlazorUI.Components.Account;
+using BlazorUI.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Raven.DependencyInjection;
 using Raven.Identity;
-using WebUI.Client.Services;
-using WebUI.Components;
-using WebUI.Components.Account;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveServerComponents();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
 builder.Services
     .AddRavenDbDocStore() // Create our IDocumentStore singleton using the database settings in appsettings.json
@@ -27,20 +25,18 @@ builder.Services
     .AddRavenDbIdentityStores<User, Raven.Identity.IdentityRole>()
     .AddDefaultTokenProviders();// Use Raven as the Identity store for user users and roles.
 
-builder.Services.AddScoped(sp => new HttpClient
+builder.Services.AddHttpClient<BackendService>("Backend", client =>
 {
-    BaseAddress = new Uri(builder.Configuration["BackendUrl"]!)
+    client.BaseAddress = new Uri(builder.Configuration["BackendUrl"]!);
 });
 
 builder.Services.AddSingleton<IEmailSender<User>, IdentityNoOpEmailSender>();
-builder.Services.AddSingleton<IBackendService, BackendService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseWebAssemblyDebugging();
     app.UseMigrationsEndPoint();
 }
 else
@@ -56,9 +52,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(WebUI.Client._Imports).Assembly);
+    .AddInteractiveServerRenderMode();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();

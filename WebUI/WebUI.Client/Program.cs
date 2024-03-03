@@ -4,10 +4,6 @@ using WebUI.Client;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddScoped(sp => new HttpClient
-{
-    BaseAddress = new Uri(builder.Configuration["BackendUrl"]!)
-});
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();

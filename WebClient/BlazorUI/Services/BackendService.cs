@@ -1,12 +1,11 @@
-﻿using Admin.Shared;
-using Admin.Shared.Contracts;
+﻿using Admin.Shared.Contracts;
+using Admin.Shared;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
-using System.Net.Http.Json;
 
-namespace WebUI.Client.Services
+namespace BlazorUI.Services
 {
-    public class BackendService : IBackendService
+    public class BackendService
     {
         private readonly HttpClient _backendClient;
         private readonly ILogger<BackendService> _logger;
@@ -18,7 +17,7 @@ namespace WebUI.Client.Services
         }
         public async Task<ApiResult<PagedList<User>>> SearchUsersAsync(int page, int pageSize, CancellationToken token = default)
         {
-            return await SearchModelAsync<User>("/users", page, pageSize, token);
+            return await SearchModelAsync<User>("/api/users", page, pageSize, token);
         }
 
         public async Task<ApiResult<PagedList<TModel>>> SearchModelAsync<TModel>(string uri, int page, int pageSize, CancellationToken token = default)
@@ -34,6 +33,7 @@ namespace WebUI.Client.Services
             //    queryParams.Add("orderAscending", ascending ? "1" : "0");
             //}
 
+            
             var responseTask = _backendClient.GetAsync(QueryHelpers.AddQueryString(uri, queryParams), token);
             return await HandleJsonResponse(responseTask, PagedList<TModel>.Empty, token);
         }
@@ -43,6 +43,7 @@ namespace WebUI.Client.Services
         {
             try
             {
+                
                 using HttpResponseMessage response = await taskResponse.ConfigureAwait(false);
 
                 bool hasContent = response.StatusCode != HttpStatusCode.NoContent;
