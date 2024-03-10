@@ -6,6 +6,17 @@ using Raven.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+          policy =>
+          {
+              policy.WithOrigins("https://localhost:7084",
+                                  "https://localhost:7112",
+                                  "http://localhost:5093");
+          });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 // Required for Raven Identity to work with authorization and authentication.
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,15 +1,12 @@
-﻿@    using System.Net.Http
-@    using System.Net.Http.Json
-@    using Admin.Shared
-@    using Admin.Shared.Contracts
-@    using WebUI.Services;
-    using WebUI.Client.Services
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Admin.Shared
+@using Admin.Shared.Contracts
+@using WebUI.Client.BackendServices
 
 @page "/users"
-@inject IBackendService BackendService
+@inject IUserService userService
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false ))
-
-
 
 <h3>Users</h3>
 
@@ -36,24 +33,9 @@
 
         await base.OnInitializedAsync();
 
-        var result = await BackendService.SearchUsersAsync(1, 10);
-
-        if (result.IsSuccess)
-        {
-            members = result.Value;
-            count = members.TotalCount;
-        }
-
-
+        members = await userService.SearchUsersAsync(1, 10);
 
         isLoading = false;
-    }
-
-    private async Task LoadData(LoadDataArgs args)
-    {
-
-
-
     }
 
 }

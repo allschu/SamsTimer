@@ -1,7 +1,7 @@
 ﻿using Admin.Shared.Contracts;
 using Admin.Shared;
 
-namespace WebUI.Client.Services
+namespace WebUI.Services
 {
     public interface IBackendService
     {

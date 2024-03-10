@@ -2,28 +2,27 @@
 using Admin.Shared.Contracts;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
-using System.Net.Http.Json;
 
-namespace WebUI.Client.Services
+namespace WebUI.Services
 {
     public class BackendService : IBackendService
     {
         private readonly HttpClient _backendClient;
         private readonly ILogger<BackendService> _logger;
 
-        public BackendService(HttpClient backendClient, ILogger<BackendService> logger)
+        public BackendService(HttpClient httpClient, ILogger<BackendService> logger)
         {
-            _backendClient = backendClient;
             _logger = logger;
+            _backendClient = httpClient;
         }
         public async Task<ApiResult<PagedList<User>>> SearchUsersAsync(int page, int pageSize, CancellationToken token = default)
         {
-            return await SearchModelAsync<User>("/users", page, pageSize, token);
+            return await SearchModelAsync<User>("/api/users", page, pageSize, token);
         }
 
         public async Task<ApiResult<PagedList<TModel>>> SearchModelAsync<TModel>(string uri, int page, int pageSize, CancellationToken token = default)
         {
-            var queryParams = new Dictionary<string, string> { { "page", $"{page}" }, { "pageSize", $"{pageSize}" } };
+            var queryParams = new Dictionary<string, string> { { "Page", $"{page}" }, { "PageSize", $"{pageSize}" } };
             //if (!string.IsNullOrWhiteSpace(search))
             //{
             //    queryParams.Add("search", search);
@@ -33,17 +32,24 @@ namespace WebUI.Client.Services
             //    queryParams.Add("orderProperty", orderProperty);
             //    queryParams.Add("orderAscending", ascending ? "1" : "0");
             //}
+            var url = QueryHelpers.AddQueryString(uri, queryParams);
 
-            var responseTask = _backendClient.GetAsync(QueryHelpers.AddQueryString(uri, queryParams), token);
+            _logger.LogInformation($"Loading paged data from backend: {_backendClient.BaseAddress + url}");
+
+            var responseTask = _backendClient.GetAsync(url, token);
             return await HandleJsonResponse(responseTask, PagedList<TModel>.Empty, token);
         }
-
 
         private async Task<ApiResult<TModel>> HandleJsonResponse<TModel>(Task<HttpResponseMessage> taskResponse, TModel? defaultValue = default, CancellationToken token = default)
         {
             try
             {
                 using HttpResponseMessage response = await taskResponse.ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogWarning($"Failed to load JSON response from backend. Status code: {response.StatusCode}");
+                }
 
                 bool hasContent = response.StatusCode != HttpStatusCode.NoContent;
 
@@ -94,10 +100,4 @@ namespace WebUI.Client.Services
         }
     }
 
-    public class ApiResult<T>
-    {
-        public T? Value { get; set; }
-        public bool IsSuccess { get; set; }
-        public ProblemDetails? ProblemDetails { get; set; }
-    }
 }
