@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.Client", "WebUI.Client\WebUI.Client.csproj", "{880187E7-033C-4FBB-B5D6-05643F98C6A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Api", "..\Admin.Api\Admin.Api.csproj", "{E6111EA6-FC77-48E0-8067-51F41742D4F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Shared", "..\Admin.Shared\Admin.Shared.csproj", "{E2EC11A5-8F2D-4F85-A279-46DC175139D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{880187E7-033C-4FBB-B5D6-05643F98C6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{880187E7-033C-4FBB-B5D6-05643F98C6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{880187E7-033C-4FBB-B5D6-05643F98C6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6111EA6-FC77-48E0-8067-51F41742D4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6111EA6-FC77-48E0-8067-51F41742D4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6111EA6-FC77-48E0-8067-51F41742D4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6111EA6-FC77-48E0-8067-51F41742D4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2EC11A5-8F2D-4F85-A279-46DC175139D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2EC11A5-8F2D-4F85-A279-46DC175139D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2EC11A5-8F2D-4F85-A279-46DC175139D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2EC11A5-8F2D-4F85-A279-46DC175139D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
